@@ -1,0 +1,4 @@
+- [x] Update JJWT version in pom.xml from 0.13.0 to 0.12.6
+- [x] Refactor JwtUtil.java to use direct JJWT API calls instead of reflection
+- [x] Remove unused imports in JwtUtil.java
+- [ ] Test the application to ensure JWT parsing works (requires Maven to download dependencies)

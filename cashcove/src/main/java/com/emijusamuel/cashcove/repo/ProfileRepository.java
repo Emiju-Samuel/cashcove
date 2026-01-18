@@ -8,7 +8,10 @@ import com.emijusamuel.cashcove.entity.ProfileEntity;
 
 public interface ProfileRepository extends JpaRepository< ProfileEntity, Long >{
 
-    // select * from thbl_profiles where email = ?;
+    // select * from tbl_profiles where email = ?;
     Optional<ProfileEntity>findByEmail(String email);
+
+    // select * from tbl_profiles where activationToken = ?;
+    Optional<ProfileEntity> findByActivationToken(String activationToken);
 
 }

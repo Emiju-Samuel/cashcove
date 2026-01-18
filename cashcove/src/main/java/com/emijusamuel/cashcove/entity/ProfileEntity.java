@@ -44,7 +44,7 @@ public class ProfileEntity {
     @PrePersist
     public void prePersist(){
         if(this.isActive == null){
-            isActive = true;
+            isActive = false;
         }
     }
 
