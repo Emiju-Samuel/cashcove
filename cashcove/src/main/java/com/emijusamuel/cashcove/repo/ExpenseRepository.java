@@ -14,12 +14,12 @@ import com.emijusamuel.cashcove.entity.ExpenseEntity;
 public interface ExpenseRepository extends JpaRepository<ExpenseEntity, Long>{
 
     // select * from tbl_expenses where profile_id = ?1 order by date desc
-    List<ExpenseEntity> findByProfileIdOrderByDates(Long profileId);
+    List<ExpenseEntity> findByProfileIdOrderByDateDesc(Long profileId);
 
     // select * from tbl_expenses where profile_id =?1 order by date desc limit 5
     List<ExpenseEntity> findTop5ByProfileIdOrderByDateDesc(Long profileId);
 
-    @Query("SELECT SUM(e.amount) FROM ExpenseEntity e WHERE i.profile.id = :profileId")
+    @Query("SELECT SUM(e.amount) FROM ExpenseEntity e WHERE e.profile.id = :profileId")
     BigDecimal findTotalExpenseByProfileId(@Param("profileId") Long profileId);
 
     // select * from tbl_expenses where profile_id = ?1 and date ?2 and ?3 and like %?4%
