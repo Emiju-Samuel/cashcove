@@ -10,8 +10,10 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class JwtUtil {
 
     @Value("${jwt.secret.key}")
@@ -33,10 +35,23 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token){
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            if (token == null || token.isEmpty()) {
+                throw new IllegalArgumentException("JWT token is null or empty");
+            }
+            int periodCount = (int) token.chars().filter(ch -> ch == '.').count();
+            log.debug("Parsing JWT token with {} periods (expected 2)", periodCount);
+            
+            return Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            log.error("Error extracting claims from token. Token length: {}, Token preview: {}", 
+                    token != null ? token.length() : 0, 
+                    token != null ? (token.length() > 50 ? token.substring(0, 50) + "..." : token) : "null");
+            throw e;
+        }
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){

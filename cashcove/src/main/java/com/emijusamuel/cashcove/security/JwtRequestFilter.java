@@ -34,11 +34,13 @@ public class JwtRequestFilter extends OncePerRequestFilter{
         String jwt = null;
 
         if(authHeader != null && authHeader.startsWith("Bearer ")){
-            jwt = authHeader.substring(7);
+            jwt = authHeader.substring(7).trim();
+            log.debug("JWT Token: {}", jwt);
+            log.debug("JWT Token period count: {}", jwt.split("\\.").length - 1);
             try {
                 email = jwtUtil.extractUsername(jwt);
             } catch (Exception e) {
-                log.warn("Failed to extract username from JWT token", e);
+                log.warn("Failed to extract username from JWT token. Token: {}", jwt, e);
             }
         }
 
