@@ -36,9 +36,53 @@ public class ProfileService {
         // send activation email
         String activationLink = "http://localhost:8080/api/v1.0/activate?token=" + newProfile.getActivationToken();
         String subject = "Activate your CashCove Account";
-        String body = "Click on the following link to activate your account: " + activationLink;
-        emailService.sendEmail(newProfile.getEmail(), subject, body);
+        String htmlBody = buildActivationEmailHTML(newProfile.getFullName(), activationLink);
+        emailService.sendHtmlEmail(newProfile.getEmail(), subject, htmlBody);
         return toDTO(newProfile);
+    }
+
+    private String buildActivationEmailHTML(String fullName, String activationLink) {
+        return "<!DOCTYPE html>" +
+                "<html>" +
+                "<head>" +
+                "    <style>" +
+                "        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5; }" +
+                "        .container { max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }" +
+                "        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 20px; text-align: center; }" +
+                "        .header h1 { margin: 0; font-size: 28px; font-weight: 600; }" +
+                "        .content { padding: 40px 30px; text-align: center; }" +
+                "        .content p { color: #333; font-size: 16px; line-height: 1.6; margin: 15px 0; }" +
+                "        .welcome-text { font-size: 18px; color: #667eea; font-weight: 600; }" +
+                "        .button-container { margin: 30px 0; }" +
+                "        .activation-btn { display: inline-block; padding: 14px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 5px; font-size: 16px; font-weight: 600; transition: transform 0.2s, box-shadow 0.2s; }" +
+                "        .activation-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }" +
+                "        .footer { background-color: #f9f9f9; padding: 20px; text-align: center; border-top: 1px solid #eee; }" +
+                "        .footer p { color: #666; font-size: 12px; margin: 5px 0; }" +
+                "        .link-text { color: #667eea; word-break: break-all; font-size: 12px; margin-top: 15px; }" +
+                "    </style>" +
+                "</head>" +
+                "<body>" +
+                "    <div class=\"container\">" +
+                "        <div class=\"header\">" +
+                "            <h1>Welcome to CashCove!</h1>" +
+                "        </div>" +
+                "        <div class=\"content\">" +
+                "            <p class=\"welcome-text\">Hello " + fullName + ",</p>" +
+                "            <p>Thank you for signing up for CashCove. Your account has been created, but it needs to be activated to get started.</p>" +
+                "            <p>Click the button below to activate your account:</p>" +
+                "            <div class=\"button-container\">" +
+                "                <a href=\"" + activationLink + "\" class=\"activation-btn\">Activate Account</a>" +
+                "            </div>" +
+                "            <p style=\"color: #999; font-size: 14px; margin-top: 25px;\">Or copy and paste this link in your browser:</p>" +
+                "            <p class=\"link-text\">" + activationLink + "</p>" +
+                "        </div>" +
+                "        <div class=\"footer\">" +
+                "            <p>© 2026 CashCove. All rights reserved.</p>" +
+                "            <p>If you didn't create this account, please ignore this email.</p>" +
+                "        </div>" +
+                "    </div>" +
+                "</body>" +
+                "</html>";
     }
 
     public ProfileEntity toEntity(ProfileDTO profileDTO){

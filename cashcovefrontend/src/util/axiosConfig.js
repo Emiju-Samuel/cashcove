@@ -2,7 +2,7 @@ import axios from "axios";
 import { baseUrl } from "./apiEndpoints";
 
 const axiosConfig = axios.create({
-    baseUrl : baseUrl,
+    baseURL: baseUrl,
     headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
@@ -15,7 +15,7 @@ const excludeEndpoints = ["/login", "/register", "/status", "/activate", "/healt
 // request interceptors
 axiosConfig.interceptors.request.use((config)=>{
     const shouldSkipToken = excludeEndpoints.some((endpoint)=>{
-        config.url?.includes(endpoint)
+        return config.url?.includes(endpoint)
     });
 
     if(!shouldSkipToken){
@@ -33,12 +33,18 @@ axiosConfig.interceptors.request.use((config)=>{
 axiosConfig.interceptors.response.use((response)=> {
     return response;
 }, (error)=> {
-    if(error.response.status === 401){
-        window.location.href = "/login";
-    }else if(error.response.status === 500){
-        console.error("Server error, pls try again later");
+    if(error.response){
+        if(error.response.status === 401){
+            window.location.href = "/login";
+        }else if(error.response.status === 500){
+            console.error("Server error, pls try again later");
+        }
     } else if(error.code === "ECONNABORTED"){
         console.error("Request timeout. Please try again");
+    } else if(error.code === "ERR_NETWORK"){
+        console.error("Network error: Cannot reach the server. Please ensure the backend is running.");
     }
     return Promise.reject(error);
-})
+});
+
+export default axiosConfig;
