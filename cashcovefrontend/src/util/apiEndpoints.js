@@ -5,5 +5,6 @@ const CLOUDINARY_NAME = "dktaopmnb";
 export const apiEndpoints = {
     LOGIN: "/login",
     REGISTER: "/register",
+    GET_USER_INFO: "/profile",
     UPLOAD_IMAGE: `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`,
 }
