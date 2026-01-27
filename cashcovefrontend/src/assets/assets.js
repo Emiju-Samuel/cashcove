@@ -1,6 +1,6 @@
 import logo from "../assets/logo.png";
 import loginBg from "../assets/loginbg.jpg";
-import { Coins, FunnelPlus, LayoutDashboard, List, Wallet } from "lucide-react";
+import { CalendarCheck, Coins, FunnelPlus, LayoutDashboard, List, Wallet } from "lucide-react";
 
 
 export const assets = {
@@ -39,6 +39,12 @@ export const SIDE_BAR_DATA = [
         label: "Filters",
         icon: FunnelPlus,
         path: "/filter"
+    },
+    {
+        id: "06",
+        label: "Subscription",
+        icon: CalendarCheck,
+        path: "/subscription"
     }
 
 ]

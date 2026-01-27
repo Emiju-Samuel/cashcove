@@ -54,7 +54,7 @@ public class IncomeService {
         ProfileEntity profile = profileService.getCurrentProfile();
         IncomeEntity entity = incomeRepository.findById(incomeId)
         .orElseThrow(()-> new RuntimeException("Income not found"));
-        if(entity.getProfile().getId().equals(profile.getId())){
+        if(!entity.getProfile().getId().equals(profile.getId())){
             throw new RuntimeException("Unauthorized to delete this income");
         }
         incomeRepository.delete(entity);
