@@ -10,6 +10,7 @@ import axios from 'axios';
 import AddIncomeForm from '../Components/AddIncomeForm';
 import { toast } from 'react-toastify';
 import DeleteAlert from '../Components/DeleteAlert';
+import IncomeOverview from '../Components/IncomeOverview';
 
 const Income = () => {
   UseUser();
@@ -123,6 +124,41 @@ const Income = () => {
     }
   }
 
+
+  const handleDownloadIncomeDetails = async () => {
+    
+    try{
+      const response = await axiosConfig.get(apiEndpoints.INCOME_EXCEL_DOWNLOAD, {responseType:"blob"});
+      let filename = "income_details.xlsx"
+      const url = window.URL.createObject(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success("Download income details successfully");
+    }catch(error){
+      console.error("Error downloading the income details", error);
+      toast.error(error.response?.data?.message ||  "Failed to download income");
+    }
+  }
+
+  const handleEmailIncomeDetails = async () => {
+    
+    try{
+      const response = await axiosConfig.get(apiEndpoints.EMAIL_INCOME);
+      if(response.status === 200){
+        toast.success("Income details emailed successfully");
+      }
+    }catch(error){
+      console.error("Error emailing income details: ", error);
+      toast.error(error.response?.data?.message || "Failed to email income");
+    }
+  }
+
+
   useEffect(()=> {
     fetchIncomeDetails();
     fetchIncomeCategories();
@@ -136,13 +172,14 @@ const Income = () => {
         <div className="grid grid-cols-1 gap-6">
           <div>
             {/* overview for income with line chart */}
-            <button className='add-btn flex items-center' onClick={() => setOpenAddIncomeModal(true)}>
-              <Plus size={15} className='text-lg'/> Add Income
-            </button>
+            
+            <IncomeOverview transactions={incomeData} onAddIncome={()=> setOpenAddIncomeModal(true)}/>
           </div>
 
           <IncomeList
           transactions={incomeData} onDelete={(id)=>setOpenDeleteAlert({show: true, data: id})}
+          onDownload={handleDownloadIncomeDetails}
+          onEmail={handleEmailIncomeDetails}
           />
 
 
