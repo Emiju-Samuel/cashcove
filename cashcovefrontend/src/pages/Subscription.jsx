@@ -7,7 +7,7 @@ const Subscription = () => {
     UseUser();
 
   return (
-    <Dashboard activeMenu="Subscription">
+    <Dashboard activeMenu="Subscriptions">
         <div>Manage your subscriptions easily with CashCove .... feature is coming soon</div>
     </Dashboard>
   )

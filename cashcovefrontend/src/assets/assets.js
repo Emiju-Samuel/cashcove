@@ -42,7 +42,7 @@ export const SIDE_BAR_DATA = [
     },
     {
         id: "06",
-        label: "Subscription",
+        label: "Subscriptions",
         icon: CalendarCheck,
         path: "/subscription"
     }

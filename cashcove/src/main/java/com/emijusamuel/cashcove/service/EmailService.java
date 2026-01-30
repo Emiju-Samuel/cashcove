@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import org.springframework.core.io.ByteArrayResource;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +52,18 @@ public class EmailService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+
+    public void sendEmailWithAttachment(String to, String subject, String body, byte[] attachment, String filename) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setFrom(fromEmail);
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(body);
+        helper.addAttachment(filename, new ByteArrayResource(attachment));
+        javaMailSender.send(message);
     }
 
 }

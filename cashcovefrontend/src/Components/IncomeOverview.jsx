@@ -210,7 +210,7 @@ const IncomeOverview = ({transactions, onAddIncome}) => {
                 Track your earnings over time and analyze your income trends
             </p>
             </div>
-            <button className='add-btn flex items-center' onClick={onAddIncome}>
+            <button className='add-btn bg-white rounded-xs px-2 py-1 flex items-center' onClick={onAddIncome}>
               <Plus size={15} className='text-lg'/> Add Income
             </button>
         </div>

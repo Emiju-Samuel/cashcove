@@ -130,7 +130,7 @@ const Income = () => {
     try{
       const response = await axiosConfig.get(apiEndpoints.INCOME_EXCEL_DOWNLOAD, {responseType:"blob"});
       let filename = "income_details.xlsx"
-      const url = window.URL.createObject(new Blob([response.data]));
+      const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", filename);
