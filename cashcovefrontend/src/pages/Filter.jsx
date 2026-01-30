@@ -104,7 +104,7 @@ const Filter = () => {
             <p className='text-gray-500'>Select the filters and click apply to filter the transactions</p>
           ): ""}
           {loading ? (
-            <p className="text-gray-500">Loading traansactions...</p>
+            <p className="text-gray-500">Loading transactions...</p>
           ):("")}
           {transactions.map((transaction) => 
           <TransactionInfoCard

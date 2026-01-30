@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.emijusamuel.cashcove.entity.ProfileEntity;
 import com.emijusamuel.cashcove.service.EmailService;
 import com.emijusamuel.cashcove.service.ExcelService;
+import com.emijusamuel.cashcove.service.ExpenseService;
 import com.emijusamuel.cashcove.service.IncomeService;
 import com.emijusamuel.cashcove.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class EmailController {
 
     private final ExcelService excelService;
     private final IncomeService incomeService;
+    private final ExpenseService expenseService;
     private final EmailService emailService;
     private final ProfileService profileService;
 
@@ -32,10 +34,23 @@ public class EmailController {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         excelService.writeIncomesToExcel(baos, incomeService.getCurrentMonthIncomesForCurrentUser());
         emailService.sendEmailWithAttachment(profile.getEmail(),
-            "Your Income Excel Report",
+            "Your Income Report",
             "Please find attached, your income report",
             baos.toByteArray(),
             "income.xlsx");
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/expense-excel")
+    public ResponseEntity<Void> emailExpenseExcel() throws IOException, MessagingException{
+        ProfileEntity profile = profileService.getCurrentProfile();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        excelService.writeExpensesToExcel(baos, expenseService.getCurrentMonthExpensesForCurrentUser());
+        emailService.sendEmailWithAttachment(profile.getEmail(),
+            "Your Expense Report",
+            "Please find attached, your expense report",
+            baos.toByteArray(),
+            "expense.xlsx");
         return ResponseEntity.ok(null);
     }
 

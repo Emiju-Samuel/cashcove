@@ -5,7 +5,7 @@ import moment from 'moment'
 
 const Transactions = ({transactions, onMore, title, type}) => {
   return (
-    <div className="card">
+    <div className="card bg-white shadow px-5 py-5 rounded-2xl">
         <div className="flex items-center justify-between">
         <h5 className="text-lg">{title}</h5>
         <button className="card-btn" onClick={onMore}>
