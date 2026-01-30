@@ -5,23 +5,24 @@ import TransactionInfoCard from './TransactionInfoCard'
 
 const IncomeList = ({transactions, onDelete, onDownload, onEmail}) => {
 
-    const [loading, setLoading] = useState(false);
+    const [isEmailing, setIsEmailing] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
 
     const handleEmail = async () => {
-        setLoading(true);
+        setIsEmailing(true);
         try{
             await onEmail();
         }finally{
-            setLoading(false);
+            setIsEmailing(false);
         }
     }
 
     const handleDownload = async () => {
-        setLoading(true);
+        setIsDownloading(true);
         try{
             await onDownload();
         }finally{
-            setLoading(true);
+            setIsDownloading(false);
         }
     }
 
@@ -30,8 +31,8 @@ const IncomeList = ({transactions, onDelete, onDownload, onEmail}) => {
         <div className="flex items-center justify-between">
             <h5 className="text-lg">Income Sources</h5>
             <div className="flex items-center justify-end gap-2">
-                <button disabled={loading} className="card-btn flex items-center justify-end gap-2" onClick={handleEmail}>
-                    {loading ? (
+                <button disabled={isEmailing} className="card-btn flex items-center justify-end gap-2" onClick={handleEmail}>
+                    {isEmailing ? (
                         <>
                         <LoaderCircle className='w-4 h-4 animate-spin'/>
                         Emailing....
@@ -43,8 +44,8 @@ const IncomeList = ({transactions, onDelete, onDownload, onEmail}) => {
                     )}
                 </button>
 
-                <button disabled={loading} className="card-btn flex items-center justify-end gap-2" onClick={handleDownload}>
-                    {loading ? (
+                <button disabled={isDownloading} className="card-btn flex items-center justify-end gap-2" onClick={handleDownload}>
+                    {isDownloading ? (
                         <>
                         <LoaderCircle className='w-4 h-4 animate-spin'/>
                         Downloading...

@@ -33,9 +33,9 @@ public class ExcelService {
                 Row row = sheet.createRow(i + 1);
                 row.createCell(0).setCellValue(i + 1);
                 row.createCell(1).setCellValue(income.getName() != null ? income.getName(): "N/A");
-                row.createCell(2).setCellValue(income.getName() != null ? income.getCategoryName(): "N/A");
-                row.createCell(3).setCellValue(income.getName() != null ? income.getAmount().doubleValue(): 0);
-                row.createCell(4).setCellValue(income.getName() != null ? income.getDate().toString(): "N/A");
+                row.createCell(2).setCellValue(income.getCategoryName() != null ? income.getCategoryName(): "N/A");
+                row.createCell(3).setCellValue(income.getAmount() != null ? income.getAmount().doubleValue(): 0);
+                row.createCell(4).setCellValue(income.getDate() != null ? income.getDate().toString(): "N/A");
             });
             workbook.write(os);
         }
@@ -67,5 +67,41 @@ public class ExcelService {
             workbook.write(os);
         }
 
+    }
+
+    public String generateIncomesHtmlTable(List<IncomeDTO> incomes) {
+        StringBuilder html = new StringBuilder();
+        html.append("<table border='1' style='border-collapse: collapse;'>");
+        html.append("<tr><th>S.No</th><th>Name</th><th>Category</th><th>Amount</th><th>Date</th></tr>");
+        for (int i = 0; i < incomes.size(); i++) {
+            IncomeDTO income = incomes.get(i);
+            html.append("<tr>");
+            html.append("<td>").append(i + 1).append("</td>");
+            html.append("<td>").append(income.getName() != null ? income.getName() : "N/A").append("</td>");
+            html.append("<td>").append(income.getCategoryName() != null ? income.getCategoryName() : "N/A").append("</td>");
+            html.append("<td>").append(income.getAmount() != null ? income.getAmount() : 0).append("</td>");
+            html.append("<td>").append(income.getDate() != null ? income.getDate().toString() : "N/A").append("</td>");
+            html.append("</tr>");
+        }
+        html.append("</table>");
+        return html.toString();
+    }
+
+    public String generateExpensesHtmlTable(List<ExpenseDTO> expenses) {
+        StringBuilder html = new StringBuilder();
+        html.append("<table border='1' style='border-collapse: collapse;'>");
+        html.append("<tr><th>S.No</th><th>Name</th><th>Category</th><th>Amount</th><th>Date</th></tr>");
+        for (int i = 0; i < expenses.size(); i++) {
+            ExpenseDTO expense = expenses.get(i);
+            html.append("<tr>");
+            html.append("<td>").append(i + 1).append("</td>");
+            html.append("<td>").append(expense.getName() != null ? expense.getName() : "N/A").append("</td>");
+            html.append("<td>").append(expense.getCategoryName() != null ? expense.getCategoryName() : "N/A").append("</td>");
+            html.append("<td>").append(expense.getAmount() != null ? expense.getAmount() : 0).append("</td>");
+            html.append("<td>").append(expense.getDate() != null ? expense.getDate().toString() : "N/A").append("</td>");
+            html.append("</tr>");
+        }
+        html.append("</table>");
+        return html.toString();
     }
 }

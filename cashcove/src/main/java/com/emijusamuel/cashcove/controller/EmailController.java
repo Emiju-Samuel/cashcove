@@ -31,11 +31,14 @@ public class EmailController {
     @GetMapping("/income-excel")
     public ResponseEntity<Void> emailIncomeExcel() throws IOException, MessagingException{
         ProfileEntity profile = profileService.getCurrentProfile();
+        var incomes = incomeService.getCurrentMonthIncomesForCurrentUser();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        excelService.writeIncomesToExcel(baos, incomeService.getCurrentMonthIncomesForCurrentUser());
-        emailService.sendEmailWithAttachment(profile.getEmail(),
+        excelService.writeIncomesToExcel(baos, incomes);
+        String htmlTable = excelService.generateIncomesHtmlTable(incomes);
+        String htmlBody = "Please find attached, your income report.<br><br>" + htmlTable;
+        emailService.sendHtmlEmailWithAttachment(profile.getEmail(),
             "Your Income Report",
-            "Please find attached, your income report",
+            htmlBody,
             baos.toByteArray(),
             "income.xlsx");
         return ResponseEntity.ok(null);
@@ -44,11 +47,14 @@ public class EmailController {
     @GetMapping("/expense-excel")
     public ResponseEntity<Void> emailExpenseExcel() throws IOException, MessagingException{
         ProfileEntity profile = profileService.getCurrentProfile();
+        var expenses = expenseService.getCurrentMonthExpensesForCurrentUser();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        excelService.writeExpensesToExcel(baos, expenseService.getCurrentMonthExpensesForCurrentUser());
-        emailService.sendEmailWithAttachment(profile.getEmail(),
+        excelService.writeExpensesToExcel(baos, expenses);
+        String htmlTable = excelService.generateExpensesHtmlTable(expenses);
+        String htmlBody = "Please find attached, your expense report.<br><br>" + htmlTable;
+        emailService.sendHtmlEmailWithAttachment(profile.getEmail(),
             "Your Expense Report",
-            "Please find attached, your expense report",
+            htmlBody,
             baos.toByteArray(),
             "expense.xlsx");
         return ResponseEntity.ok(null);

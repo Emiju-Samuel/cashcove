@@ -66,4 +66,18 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
+    /**
+     * Send HTML email with attachment
+     */
+    public void sendHtmlEmailWithAttachment(String to, String subject, String htmlBody, byte[] attachment, String filename) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setFrom(fromEmail);
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(htmlBody, true);
+        helper.addAttachment(filename, new ByteArrayResource(attachment));
+        javaMailSender.send(message);
+    }
+
 }
