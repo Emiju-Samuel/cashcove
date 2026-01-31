@@ -3,7 +3,7 @@ import React from 'react'
 
 const CategoryList = ({categories, onEditCategory}) => {
   return (
-    <div className='card p-4'>
+    <div className='card p-4 bg-white rounded-2xl shadow p-10'>
         <div className="flex items-center justify-between mb-4">
             <h4 className="text-lg font-semibold">Category Sources</h4>
         </div>

@@ -107,12 +107,12 @@ const Category = () => {
       <div className="my-5 mx-auto">
         {/* add button to add category */}
 
-        <div className="flex justify-between items-center mb-5">
+        <div className="flex justify-between items-center mb-5 bg-white rounded-xl p-5 shadow">
           <h2 className="text-2xl font-semibold">All Categories</h2>
           <button
           onClick={()=> setOpenAddCategoryModal(true)}
-          className="bg-green-100 rounded p-2 add-btn flex items-center gap-1">
-            <Plus size={15}/>
+          className="rounded p-2 add-btn flex items-center gap-1">
+            <Plus className="text-green-500" size={15}/>
             New Category
           </button>
         </div>
