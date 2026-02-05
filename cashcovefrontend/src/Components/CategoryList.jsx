@@ -1,4 +1,4 @@
-import { Layers, Pencil } from 'lucide-react'
+import { Layers, Pencil, Trash } from 'lucide-react'
 import React from 'react'
 
 const CategoryList = ({categories, onEditCategory}) => {
@@ -44,11 +44,16 @@ const CategoryList = ({categories, onEditCategory}) => {
                         </p>
                     </div>
                     {/* Action buttons */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-8">
                         <button
                         onClick={()=> onEditCategory(category)}
-                        className="text-gray-400 transition-opacity cursor-pointer">
+                        className="text-gray-400 transition-opacity cursor-pointer hover:text-amber-500">
                             <Pencil size={15}/>
+                        </button>
+                        <button
+                        
+                        className="text-gray-400 transition-opacity cursor-pointer hover:text-red-600">
+                            <Trash size={15}/>
                         </button>
                     </div>
                     </div>

@@ -7,12 +7,19 @@ export const prepareIncomeLineChartData = (transactions) => {
             date: t.date,
             amount: t.amount
         }))
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
+        .sort((a, b) => {
+            const [yearA, monthA, dayA] = a.date.split('-').map(Number);
+            const dateA = new Date(yearA, monthA - 1, dayA);
+            const [yearB, monthB, dayB] = b.date.split('-').map(Number);
+            const dateB = new Date(yearB, monthB - 1, dayB);
+            return dateA - dateB;
+        });
 };
 
 // Format date for display
 export const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 };
 

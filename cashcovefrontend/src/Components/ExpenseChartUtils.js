@@ -7,12 +7,13 @@ export const prepareExpenseLineChartData = (transactions) => {
             date: t.date,
             amount: t.amount
         }))
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
+        .sort((a, b) => new Date(a.date + 'T00:00:00Z') - new Date(b.date + 'T00:00:00Z'));
 };
 
 // Format date for display
 export const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 };
 
