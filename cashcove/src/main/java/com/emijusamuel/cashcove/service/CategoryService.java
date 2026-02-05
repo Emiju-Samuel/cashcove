@@ -48,7 +48,7 @@ public class CategoryService {
     }
 
 
-    // update category for a current user
+    // update a category for a current user
     public CategoryDTO updateCategory(Long categoryId, CategoryDTO dto){
         ProfileEntity profile = profileService.getCurrentProfile();
         CategoryEntity existingCategory = categoryRepository.findByIdAndProfileId(categoryId, profile.getId())
@@ -59,6 +59,14 @@ public class CategoryService {
         existingCategory = categoryRepository.save(existingCategory);
         return toDTO(existingCategory);
 
+    }
+
+    // delete a particular category for a current user
+    public void deleteCategory(Long categoryId){
+        ProfileEntity profile = profileService.getCurrentProfile();
+        CategoryEntity existingCategory = categoryRepository.findByIdAndProfileId(categoryId, profile.getId())
+        .orElseThrow(()-> new RuntimeException("Category not found or not accessible"));
+        categoryRepository.delete(existingCategory);
     }
 
 
