@@ -9,6 +9,7 @@ export const apiEndpoints = {
     GET_ALL_CATEGORIES: "/categories",
     ADD_CATEGORY: "/categories",
     UPDATE_CATEGORY: (categoryId) => `/categories/${categoryId}`,
+    DELETE_CATEGORY: (categoryId) => `/categories/${categoryId}`,
     GET_ALL_INCOMES: "/incomes",
     GET_ALL_EXPENSES: "/expenses",
     CATEGORY_BY_TYPE: (type) => `/categories/${type}`,

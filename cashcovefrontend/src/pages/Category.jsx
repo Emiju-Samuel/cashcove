@@ -8,6 +8,7 @@ import { apiEndpoints } from '../util/apiEndpoints';
 import Modal from '../Components/Modal';
 import AddCategoryForm from '../Components/AddCategoryForm';
 import { toast } from 'react-toastify';
+import DeleteAlert from '../Components/DeleteAlert';
 
 const Category = () => {
 
@@ -16,6 +17,10 @@ const Category = () => {
   const [openAddCategoryModal, setOpenAddCategoryModal] = useState(false);
   const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [openDeleteAlert, setOpenDeleteAlert] = useState({
+      show: false,
+      data: null,
+    })
 
   UseUser();
 
@@ -41,6 +46,8 @@ const Category = () => {
     fetchCategoryDetails();
   }, []);
 
+
+  // Function to add category
   const handleAddCategory = async (category) => {
     const {name, type, icon} = category;
     if(!name.trim()){
@@ -58,6 +65,7 @@ const Category = () => {
       return;
     }
 
+    // API call to add new category
     try{
       const response = await axiosConfig.post(apiEndpoints.ADD_CATEGORY, {name, type, icon});
       if(response.status === 201){
@@ -77,6 +85,8 @@ const Category = () => {
     setOpenEditCategoryModal(true);
   }
 
+
+  // function for updating a category of a particular user
   const handleUpdateCategory = async (updatedCategory) => {
     const {id, name, type, icon} = updatedCategory;
     if(!name.trim()){
@@ -89,6 +99,7 @@ const Category = () => {
       return;
     }
 
+  // API call for updating a category
     try{
       const response = await axiosConfig.put(apiEndpoints.UPDATE_CATEGORY(id), {name, type, icon});
       setOpenAddCategoryModal(false);
@@ -101,6 +112,22 @@ const Category = () => {
       toast.error(error.response?.data?.message || "Failed to update category");
     }
   }
+
+
+
+  // API call for deleting a category for a particular user
+   const deleteCategory = async (id) => {
+
+    try{
+      const response = await axiosConfig.delete(apiEndpoints.DELETE_CATEGORY(id));
+      setOpenDeleteAlert({show:false, data:null});
+      toast.success("Category deleted successfully");
+      fetchCategoryDetails();
+    }catch(error){
+      console.log("Error deleting category", error);
+      toast.error(error.response?.data?.message || "Failed to delete category")
+    }
+   }
 
   return (
     <Dashboard activeMenu="Category">
@@ -118,7 +145,7 @@ const Category = () => {
         </div>
         
         {/* catgeory list */}
-        <CategoryList categories={categoryData} onEditCategory={handleEditcategory}/>
+        <CategoryList categories={categoryData} onEditCategory={handleEditcategory} onDelete={(category) => setOpenDeleteAlert({show: true, data: category.id})}/>
 
 
         {/* adding category modal */}
@@ -145,6 +172,17 @@ const Category = () => {
             isEditing={true}
           />
         </Modal>
+
+        <Modal
+          isOpen={openDeleteAlert.show}
+          onClose={() => setOpenDeleteAlert({show: false, data: null})}
+          title="Delete Category"
+          >
+            <DeleteAlert
+            content="Are you sure you want to delete this category?"
+            onDelete={()=> deleteCategory(openDeleteAlert.data)}
+            />
+          </Modal>
       </div>
     </Dashboard>
   )

@@ -1,7 +1,7 @@
 import { Layers, Pencil, Trash } from 'lucide-react'
 import React from 'react'
 
-const CategoryList = ({categories, onEditCategory}) => {
+const CategoryList = ({categories, onEditCategory, onDelete}) => {
   return (
     <div className='card p-4 bg-white rounded-2xl shadow p-10'>
         <div className="flex items-center justify-between mb-4">
@@ -51,7 +51,7 @@ const CategoryList = ({categories, onEditCategory}) => {
                             <Pencil size={15}/>
                         </button>
                         <button
-                        
+                        onClick={()=> onDelete(category)}
                         className="text-gray-400 transition-opacity cursor-pointer hover:text-red-600">
                             <Trash size={15}/>
                         </button>

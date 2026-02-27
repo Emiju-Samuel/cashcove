@@ -12,7 +12,7 @@ const CustomLineChart = ({ data }) => {
     }
 
     // Calculate chart dimensions and scale
-    const chartWidth = 800;
+    const chartWidth = 1200;
     const chartHeight = 500;
     const padding = { top: 50, right: 50, bottom: 100, left: 100 };
     const plotWidth = chartWidth - padding.left - padding.right;

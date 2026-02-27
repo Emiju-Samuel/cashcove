@@ -57,11 +57,12 @@ const Income = () => {
     }
   }
 
-  // save the income details
+
+  // function for adding new income
   const handleAddIncome = async (income) => {
     const {name, amount, date, icon, categoryId} = income;
 
-    // validation
+    // input validation
     if(!name.trim()){
       toast.error("Please enter a name");
       return;
@@ -88,6 +89,7 @@ const Income = () => {
       return;
     }
 
+    // API call for adding new income
     try{
       const response = await axiosConfig.post(apiEndpoints.ADD_INCOME, {
         name,
@@ -193,6 +195,7 @@ const Income = () => {
            categories={categories}
            />
           </Modal>
+          
 
           {/* Delete income modal */}
           <Modal
