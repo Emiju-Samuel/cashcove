@@ -3,7 +3,7 @@ package com.emijusamuel.cashcove.enums;
 public enum SubscriptionFrequency {
 
     MONTHLY,
-    QUATERLY,
+    QUARTERLY,
     SEMI_ANNUAL,
     YEARLY
 

@@ -7,12 +7,10 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.emijusamuel.cashcove.dto.ExpenseDTO;
 import com.emijusamuel.cashcove.dto.IncomeDTO;
 import com.emijusamuel.cashcove.entity.IncomeEntity;
 import com.emijusamuel.cashcove.entity.ProfileEntity;
 import com.emijusamuel.cashcove.entity.CategoryEntity;
-import com.emijusamuel.cashcove.entity.ExpenseEntity;
 import com.emijusamuel.cashcove.repo.CategoryRepository;
 import com.emijusamuel.cashcove.repo.IncomeRepository;
 

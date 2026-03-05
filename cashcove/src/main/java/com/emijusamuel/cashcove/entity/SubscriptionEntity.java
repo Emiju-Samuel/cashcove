@@ -25,9 +25,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Index;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Data
 @Table(name = "tbl_subscriptions",
     indexes = {
            @Index(name = "idx_sub_user_next_renewal", columnList = "profile_id, nextRenewalDate"),
@@ -54,11 +56,11 @@ public class SubscriptionEntity {
     @Column(nullable = false, length = 150)
     private String subscriptionName;
 
-    @Column(nullable = false, length = 150)
-    private String subscriptionCategory;
+    // @Column(nullable = false, length = 150)
+    // private String subscriptionCategory;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal Amount;
+    private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -101,7 +103,7 @@ public class SubscriptionEntity {
                nextRenewalDate.minusDays(reminderDaysBefore).equals(today);
     }
 
-    
+
 
     public void prePersist(){
         if(this.startDate == null){

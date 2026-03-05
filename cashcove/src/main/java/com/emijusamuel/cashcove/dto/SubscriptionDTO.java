@@ -2,6 +2,7 @@ package com.emijusamuel.cashcove.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.emijusamuel.cashcove.enums.SubscriptionFrequency;
 import com.emijusamuel.cashcove.enums.SubscriptionStatus;
@@ -20,8 +21,9 @@ import lombok.NoArgsConstructor;
 public class SubscriptionDTO {
 
     private Long id;
+    private String icon;
     private String subscriptionName;
-    private String subscriptionCategory;
+    
     private BigDecimal amount;
     private SubscriptionFrequency frequency;
 
@@ -38,5 +40,8 @@ public class SubscriptionDTO {
     private String categoryName;
 
     private SubscriptionStatus subscriptionStatus;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }
