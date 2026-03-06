@@ -64,7 +64,6 @@ public class SubscriptionService {
         CategoryEntity category = categoryRepository.findById(dto.getCategoryId())
         .orElseThrow(()->new RuntimeException("Category not found"));
         SubscriptionEntity newSubscription = toEntity(dto, profile, category);
-        newSubscription.getNextRenewalDate();
         newSubscription = subscriptionRepository.save(newSubscription);
         return toDTO(newSubscription);
     }
@@ -206,6 +205,7 @@ public class SubscriptionService {
         .nextRenewalDate(entity.getNextRenewalDate())
         .frequency(entity.getSubscriptionFrequency())
         .reminderDaysBefore(entity.getReminderDaysBefore())
+        .subscriptionStatus(entity.getStatus())
         .createdAt(entity.getCreatedAt())
         .updatedAt(entity.getUpdatedAt())
         .build();

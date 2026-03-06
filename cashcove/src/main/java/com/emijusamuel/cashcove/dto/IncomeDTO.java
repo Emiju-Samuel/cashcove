@@ -21,6 +21,7 @@ public class IncomeDTO {
     private String categoryName;
     private Long categoryId;
     private BigDecimal amount;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
