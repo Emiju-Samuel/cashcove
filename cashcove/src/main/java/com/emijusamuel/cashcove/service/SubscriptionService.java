@@ -30,7 +30,7 @@ public class SubscriptionService {
     private final EmailService emailService;
 
 
-    // ─── 1. Read ────────────────────────────────────────────────────────────────
+    // Read
     @Transactional(readOnly = true)
     public SubscriptionDTO getSubscription(Long id) {
         ProfileEntity profile = profileService.getCurrentProfile();
