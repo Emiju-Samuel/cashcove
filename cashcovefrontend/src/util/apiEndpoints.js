@@ -23,5 +23,9 @@ export const apiEndpoints = {
     EMAIL_EXPENSE: "/email/expense-excel",
     APPLY_FILTER: "/filter",
     DASHBOARD_DATA: "/dashboard",
+    GET_ALL_SUBSCRIPTIONS: "/subscriptions",
+    ADD_SUBSCRIPTION: "/subscriptions",
+    UPDATE_SUBSCRIPTION: (subscriptionId) => `/subscriptions/${subscriptionId}`,
+    DELETE_SUBSCRIPTION: (subscriptionId) => `/subscriptions/${subscriptionId}`,
     UPLOAD_IMAGE: `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`,
 }

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CashcoveApplication<cashcove>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.emijusamuel.cashcove.CashcoveApplication",
+            "projectName": "cashcove",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

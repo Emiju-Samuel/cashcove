@@ -26,10 +26,14 @@ const Filter = () => {
     e.preventDefault();
     setLoading(true);
     try{
+      // Format dates from yyyy-MM-dd to dd-MM-yyyy
+      const formattedStartDate = startDate ? startDate.split('-').reverse().join('-') : '';
+      const formattedEndDate = endDate ? endDate.split('-').reverse().join('-') : '';
+      
       const response = await axiosConfig.post(apiEndpoints.APPLY_FILTER, {
         type,
-        startDate,
-        endDate,
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
         keyword,
         sortField,
         sortOrder
@@ -67,7 +71,7 @@ const Filter = () => {
             </div>
             <div>
               <label htmlFor="enddate" className='block text-sm font-medium mb-1'>End Date</label>
-              <input value={endDate} id='enddate' type="text" className='w-full border rounded px-3 py-2' onChange={e => setEndDate(e.target.value)}/>
+              <input value={endDate} id='enddate' type="date" className='w-full border rounded px-3 py-2' onChange={e => setEndDate(e.target.value)}/>
             </div>
             <div>
               <label htmlFor="sortfield" className='block text-sm font-medium mb-1'>Sort Field</label>

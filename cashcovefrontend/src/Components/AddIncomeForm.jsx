@@ -27,7 +27,12 @@ const AddIncomeForm = ({onAddIncome, categories}) => {
     const handleAddIncome = async () => {
         setLoading(true);
         try {
-            await onAddIncome(income);
+            // Format date from yyyy-MM-dd to dd-MM-yyyy
+            const formattedIncome = {
+                ...income,
+                date: income.date ? income.date.split('-').reverse().join('-') : ''
+            };
+            await onAddIncome(formattedIncome);
         } finally {
             setLoading(false);
         }
