@@ -200,7 +200,7 @@ const IncomeOverview = ({transactions, onAddIncome}) => {
     }, [transactions]);
 
   return (
-    <div className="card bg-amber-100 shadow p-3">
+    <div className="card bg-green-50 shadow py-10 px-5">
         <div className="flex items-center justify-between">
             <div>
                 <h5 className="text-lg">
@@ -210,7 +210,7 @@ const IncomeOverview = ({transactions, onAddIncome}) => {
                 Track your earnings over time and analyze your income trends
             </p>
             </div>
-            <button className='add-btn bg-white rounded-xs px-2 py-1 flex items-center' onClick={onAddIncome}>
+            <button className='add-btn bg-white text-green-600 rounded text-sm px-2 py-1 flex items-center' onClick={onAddIncome}>
               <Plus size={15} className='text-lg'/> Add Income
             </button>
         </div>

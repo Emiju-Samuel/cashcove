@@ -29,9 +29,11 @@ const DeleteAlert = ({content, onDelete}) => {
                     Deleting....
                     </>
                 ):(
-                    <>
+                    <span
+                        className="text-red-500 font-medium bg-red-50 px-3 py-1 rounded"
+                    >
                     Delete
-                    </>
+                    </span>
                 )}
             </button>
         </div>

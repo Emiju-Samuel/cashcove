@@ -4,15 +4,15 @@ import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recha
 const CustomPieChart = ({ data, colors, label, totalAmount, showTextAnchor }) => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={220}>
         <PieChart>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
             labelLine={false}
-            label={({ name, amount }) => `${name}: ${amount}`}
-            outerRadius={80}
+            // label={({ name, amount }) => `${name}: ${amount}`}
+            outerRadius={70}
             fill="#8884d8"
             dataKey="amount"
           >
@@ -20,17 +20,19 @@ const CustomPieChart = ({ data, colors, label, totalAmount, showTextAnchor }) =>
               <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Pie>
+
+          {/* The commented block of code below allows each component of the pie chart to display its properties */}
           <Tooltip 
-            formatter={(value) => `$${value.toLocaleString()}`}
-            contentStyle={{ backgroundColor: '#f5f5f5', border: '1px solid #ccc' }}
+            formatter={(value) => `${value.toLocaleString()}`}
+            contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #ccc', fontSize: '13px', padding: '1px 8px', borderRadius: '3px' }}
           />
           <Legend />
         </PieChart>
       </ResponsiveContainer>
       
-      <div className="mt-4 text-center">
+      <div className="mt-10 text-center">
         <p className="text-sm text-gray-600">{label}</p>
-        <p className="text-2xl font-bold">${totalAmount}</p>
+        <p className="text-2xl font-bold">₦{totalAmount}</p>
       </div>
 
       <div className="mt-4 w-full">
@@ -43,7 +45,7 @@ const CustomPieChart = ({ data, colors, label, totalAmount, showTextAnchor }) =>
               ></div>
               <span className="text-sm">{item.name}</span>
             </div>
-            <span className="font-semibold">${item.amount.toLocaleString()}</span>
+            <span className="font-medium">₦{item.amount.toLocaleString()}</span>
           </div>
         ))}
       </div>

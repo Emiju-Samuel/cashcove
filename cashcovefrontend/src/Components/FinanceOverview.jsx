@@ -4,7 +4,7 @@ import { addThousandsSeperator } from './util';
 
 const FinanceOverview = ({totalBalance, totalIncome, totalExpense}) => {
 
-    const COLORS = ["#591688", "#a0090", "#016630"];
+    const COLORS = ["#591688", "#333333", "#016630"];
 
     const balanceData = [
         {name: "Total Balance", amount: totalBalance},
@@ -13,7 +13,7 @@ const FinanceOverview = ({totalBalance, totalIncome, totalExpense}) => {
     ];
 
   return (
-    <div className="card bg-white p-5 rounded-2xl shadow">
+    <div className="card bg-white p-5 rounded-2xl shadow mt-4">
         <div className="flex items-center justify-between">
             <h5 className="text-lg">Financial Overview</h5>
         </div>
