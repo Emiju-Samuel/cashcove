@@ -26,7 +26,7 @@ const DeleteAlert = ({content, onDelete}) => {
                 {loading ? (
                     <>
                     <LoaderCircle className='animate-spin h-4 w-4'/>
-                    Deleting income....
+                    Deleting....
                     </>
                 ):(
                     <>

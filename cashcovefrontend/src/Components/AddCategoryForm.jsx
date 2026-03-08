@@ -24,6 +24,7 @@ const AddCategoryForm = ({onAddCategory, initialCategoryData, isEditing}) => {
     const categoryTypeOptions = [
         {value: "Income", label: "Income"},
         {value: "Expense", label: "Expense"},
+        {value: "Subscription", label: "Subscription"},
     ]
 
     const handleChange = (key, value) => {
@@ -46,11 +47,12 @@ const AddCategoryForm = ({onAddCategory, initialCategoryData, isEditing}) => {
         icon={category.icon}
         onSelect={(selectedIcon)=>handleChange("icon", selectedIcon)}
         />
+
         <Input
         value={category.name}
         onChange={({target}) => handleChange("name", target.value)}
         label="Category Name"
-        placeholder="e.g., Salary, Transportation, Groceries"
+        placeholder="e.g., Salary(Income), Groceries(Expense), Entertainment(Subscription)"
         type="text"
         />
 
@@ -72,7 +74,7 @@ const AddCategoryForm = ({onAddCategory, initialCategoryData, isEditing}) => {
                 {loading ? (
                     <>
                     <LoaderCircle className='w-4 h-4 animate-spin'/>
-                    {isEditing ? "Updating" : "Adding..."}
+                    {isEditing ? "Updating..." : "Adding..."}
                     </>
                 ):(
                     <>

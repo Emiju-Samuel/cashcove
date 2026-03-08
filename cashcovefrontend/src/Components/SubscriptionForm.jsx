@@ -208,7 +208,7 @@ const SubscriptionForm = ({ initialData, categories, onSubmit, onCancel, isLoadi
       </div>
 
       {/* Subscription Name */}
-      {formField('Subscription Name', 'subscriptionName', 'text', 'e.g., Netflix, Disney+, Spotify')}
+      {formField('Subscription Name', 'subscriptionName', 'text', 'e.g., Netflix, Disney+, Spotify, Gym membership')}
 
       {/* Amount and Frequency */}
       <div className="grid grid-cols-2 gap-4">
