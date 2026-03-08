@@ -27,12 +27,7 @@ const AddExpenseForm = ({onAddExpense, categories}) => {
         const handleAddExpense = async () => {
             setLoading(true);
             try {
-                // Format date from yyyy-MM-dd to dd-MM-yyyy
-                const formattedExpense = {
-                    ...expense,
-                    date: expense.date ? expense.date.split('-').reverse().join('-') : ''
-                };
-                await onAddExpense(formattedExpense);
+                await onAddExpense(expense);
             } finally {
                 setLoading(false);
             }

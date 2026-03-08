@@ -24,7 +24,7 @@ public class ExpenseDTO {
     private String categoryName;
     private Long categoryId;
     private BigDecimal amount;
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
