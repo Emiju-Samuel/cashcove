@@ -27,10 +27,10 @@ const ExpenseList = ({transactions, onDelete, onDownload, onEmail}) => {
         }
 
   return (
-    <div className="card mt-5 mb-8 bg-white py-5 px-4 sm:px-8 rounded-xl shadow-md shadow-gray-50 border border-gray-200/50 gap-3 sm:gap-6 flex flex-col">
+    <div className="card mt-5 mb-8 bg-white py-5 px-3 sm:px-8 rounded-xl shadow-md shadow-gray-50 border border-gray-200/50 gap-3 sm:gap-6 flex flex-col">
         <div className="flex items-center justify-between">
-            <h5 className="text-lg">My Expenses</h5>
-            <div className="flex items-center justify-end gap-2.5 sm:gap-6">
+            <h5 className="sm:text-lg text-base">My Expenses</h5>
+            <div className="flex items-center justify-end gap-1 sm:gap-6">
                 <button disabled={isEmailing} className="card-btn flex items-center justify-end gap-2" onClick={handleEmail}>
                     {isEmailing ? (
                         <>

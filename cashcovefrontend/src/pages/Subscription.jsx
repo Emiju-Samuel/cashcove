@@ -179,7 +179,7 @@ const Subscription = () => {
               setOpenAddModal(true);
               setSelectedSubscription(null);
             }}
-            className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg"
+            className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg"
           >
             <Plus size={20} /> Add Subscription
           </button>
@@ -241,7 +241,7 @@ const Subscription = () => {
 
                 <button
                   onClick={() => setViewMode('table')}
-                  className={`p-2 rounded-lg sm:hidden transition ${
+                  className={`p-2 rounded-lg hidden xl:block transition ${
                     viewMode === 'table'
                       ? 'bg-blue-100 text-blue-600'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
