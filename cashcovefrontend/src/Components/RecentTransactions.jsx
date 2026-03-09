@@ -9,7 +9,7 @@ const RecentTransactions = ({transactions, onMore}) => {
         <div className="flex items-center justify-between">
             <h4 className="text-lg">Recent Transactions</h4>
 
-            <button className="card-btn flex items-center gap-2" onClick={onMore} >
+            <button className="card-btn flex items-center gap-1" onClick={onMore} >
                 More<ArrowRight className='text-base' size={15}/>
             </button>
         </div>

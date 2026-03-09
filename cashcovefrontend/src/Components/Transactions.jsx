@@ -5,10 +5,10 @@ import moment from 'moment'
 
 const Transactions = ({transactions, onMore, title, type}) => {
   return (
-    <div className="card bg-white shadow px-5 py-5 rounded-2xl">
+    <div className="card bg-white shadow px-5 py-5 rounded-2xl mt-4">
         <div className="flex items-center justify-between">
         <h5 className="text-lg">{title}</h5>
-        <button className="card-btn flex items-center justify-between gap-2" onClick={onMore}>
+        <button className="card-btn flex items-center justify-between gap-1" onClick={onMore}>
             More <ArrowRight className='text-base' size={15}/>
         </button>
     </div>

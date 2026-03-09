@@ -7,9 +7,9 @@ const FinanceOverview = ({totalBalance, totalIncome, totalExpense}) => {
     const COLORS = ["#591688", "#333333", "#016630"];
 
     const balanceData = [
-        {name: "Total Balance", amount: totalBalance},
-        {name: "Total Expenses", amount: totalExpense},
         {name: "Total Income", amount: totalIncome},
+        {name: "Total Expenses", amount: totalExpense},
+        {name: "Total Balance", amount: totalBalance},
     ];
 
   return (

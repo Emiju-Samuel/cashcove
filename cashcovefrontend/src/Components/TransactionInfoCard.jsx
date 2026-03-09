@@ -33,7 +33,7 @@ const TransactionInfoCard = ({icon, title, date, amount, type, hideDeleteBtn, on
 
                 <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md ${getAmountStyles}`}>
                     <h6 className="text-xs font-medium">
-                        {type === "income" ? "+" : "-"} ${addThousandsSeperator(amount)}
+                        {type === "income" ? "+" : "-"} ₦{addThousandsSeperator(amount)}
                     </h6>
                     {type === "income" ? (
                         <TrendingUp className='text-green-500' size={15}/>

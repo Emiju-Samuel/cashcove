@@ -238,9 +238,10 @@ const Subscription = () => {
                 >
                   <LayoutGrid size={20} />
                 </button>
+
                 <button
                   onClick={() => setViewMode('table')}
-                  className={`p-2 rounded-lg transition ${
+                  className={`p-2 rounded-lg sm:hidden transition ${
                     viewMode === 'table'
                       ? 'bg-blue-100 text-blue-600'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'

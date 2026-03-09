@@ -30,10 +30,12 @@ const CustomPieChart = ({ data, colors, label, totalAmount, showTextAnchor }) =>
         </PieChart>
       </ResponsiveContainer>
       
-      <div className="mt-10 text-center">
+
+      {/* The block of code below allows displays the user's total balance under the piechart */}
+      {/* <div className="mt-10 text-center">
         <p className="text-sm text-gray-600">{label}</p>
         <p className="text-2xl font-bold">₦{totalAmount}</p>
-      </div>
+      </div> */}
 
       <div className="mt-4 w-full">
         {data && data.map((item, index) => (

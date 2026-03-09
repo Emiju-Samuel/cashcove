@@ -24,7 +24,7 @@ export const formatDate = (dateStr) => {
 };
 
 // Format amount
-export const formatAmount = (amount) => `$${Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+export const formatAmount = (amount) => `${Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 // Generate smooth curve path using cubic Bezier curves
 export const generateSmoothPath = (data, scaleX, scaleY) => {
