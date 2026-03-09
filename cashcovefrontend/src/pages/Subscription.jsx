@@ -271,15 +271,19 @@ const Subscription = () => {
 
               {/* Table View */}
               {viewMode === 'table' && (
-                <SubscriptionTable
-                  subscriptions={subscriptions}
-                  isLoading={loading}
-                  onEdit={(sub) => {
-                    setSelectedSubscription(sub);
-                    setOpenEditModal(true);
-                  }}
-                  onDelete={(id) => setOpenDeleteAlert({ show: true, data: id })}
-                />
+                <div className="-mx-4 overflow-x-auto">
+                  <div className="px-4">
+                    <SubscriptionTable
+                      subscriptions={subscriptions}
+                      isLoading={loading}
+                      onEdit={(sub) => {
+                        setSelectedSubscription(sub);
+                        setOpenEditModal(true);
+                      }}
+                      onDelete={(id) => setOpenDeleteAlert({ show: true, data: id })}
+                    />
+                  </div>
+                </div>
               )}
             </>
           )}

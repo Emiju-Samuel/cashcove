@@ -27,10 +27,10 @@ const ExpenseList = ({transactions, onDelete, onDownload, onEmail}) => {
         }
 
   return (
-    <div className="card mt-5 mb-8 bg-white py-5 px-8 rounded-xl shadow-md shadow-gray-50 border border-gray-200/50 gap-6 flex flex-col">
+    <div className="card mt-5 mb-8 bg-white py-5 px-4 sm:px-8 rounded-xl shadow-md shadow-gray-50 border border-gray-200/50 gap-3 sm:gap-6 flex flex-col">
         <div className="flex items-center justify-between">
             <h5 className="text-lg">My Expenses</h5>
-            <div className="flex items-center justify-end gap-6">
+            <div className="flex items-center justify-end gap-2.5 sm:gap-6">
                 <button disabled={isEmailing} className="card-btn flex items-center justify-end gap-2" onClick={handleEmail}>
                     {isEmailing ? (
                         <>
@@ -39,7 +39,7 @@ const ExpenseList = ({transactions, onDelete, onDownload, onEmail}) => {
                         </>
                     ):(
                        <>
-                       <Mail size={15} className='text-base'/> Email
+                       <Mail size={15} className='text-base invisible sm:visible'/> Email
                        </> 
                     )}
                 </button>
@@ -52,7 +52,7 @@ const ExpenseList = ({transactions, onDelete, onDownload, onEmail}) => {
                         </>
                     ):(
                         <>
-                        <Download size={15} className='text-base'/> Download
+                        <Download size={15} className='text-base invisible sm:visible'/> Download
                         </>
                     )}
                 </button>

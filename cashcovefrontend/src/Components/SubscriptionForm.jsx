@@ -191,7 +191,7 @@ const SubscriptionForm = ({ initialData, categories, onSubmit, onCancel, isLoadi
       {/* Emoji Picker */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">Icon</label>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-5 lg:grid-cols-10 gap-2">
           {['📦', '💰', '🎬', '🎵', '📱', '🏋️', '☕', '🍔', '🚗', '🏠'].map((emoji) => (
             <button
               key={emoji}
