@@ -8,7 +8,7 @@ const CustomLineChart = ({ data }) => {
     const [hoveredPoint, setHoveredPoint] = useState(null);
 
     if (!data || data.length === 0) {
-        return <div className="text-center text-gray-500 py-10">No income data available</div>;
+        return <div className="text-center text-gray-500 py-10">No expense data available</div>;
     }
 
     // Calculate chart dimensions and scale

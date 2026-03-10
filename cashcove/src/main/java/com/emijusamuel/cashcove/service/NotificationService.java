@@ -37,7 +37,7 @@ public class NotificationService {
         log.info("job completed: sendDailyIncomeExpenseRemider");
     }
 
-    // @Scheduled(cron = "0 0 23 * * *", zone = "IST")
+    // @Scheduled(cron = "0 0 23 * * *", zone = "UTC")
     public void sendDailyExpenseSummary(){
         log.info("Job started: sendDailyExpenseSummary()");
         List<ProfileEntity> profiles = profileRepository.findAll();
