@@ -80,4 +80,32 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
+
+    public void sendResetOtpEmail(String toEmail, String otp) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject("Your Password Reset OTP");
+
+            String htmlContent = "<html><body style='font-family: Arial, sans-serif; color: #333;'>" +
+                "<h2 style='color: #FF5722;'>Password Reset Request</h2>" +
+                "<p>Dear User,</p>" +
+                "<p>You have requested to reset your password. Your OTP is:</p>" +
+                "<div style='background-color: #f0f0f0; padding: 10px; border-radius: 5px; font-size: 18px; font-weight: bold; text-align: center;'>" + otp + "</div>" +
+                "<p>This OTP expires in 10 minutes. Please use it to proceed with changing your password.</p>" +
+                "<p>If you did not request this, please ignore this email.</p>" +
+                "<br>" +
+                "<p>Best regards,</p>" +
+                "<p><strong>Emiju Samuel</strong><br>Software Engineer</p>" +
+                "</body></html>";
+
+            helper.setText(htmlContent, true);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to send reset OTP email", e);
+        }
+    }
+
 }

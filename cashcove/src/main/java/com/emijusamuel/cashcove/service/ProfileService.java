@@ -2,7 +2,9 @@ package com.emijusamuel.cashcove.service;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -161,6 +163,58 @@ public class ProfileService {
         }catch(Exception e){
             throw new RuntimeException("Invalid email or password");
         }
+    }
+
+
+    // @Override
+    public void sendResetOtp(String email){
+        ProfileEntity currentUser = profileRepository.findByEmail(email)
+        .orElseThrow(() -> new UsernameNotFoundException("Profile not found: "+email));
+
+        // Generate 6 digit otp
+        String otp = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
+
+        // calculate expiry time (current time + 10minutes in milliseconds)
+        long expiryTime = System.currentTimeMillis() + (10 * 60 * 1000);
+
+        // update the profile/user
+        currentUser.setResetOtp(otp);
+        currentUser.setResetOtpExpiredAt(expiryTime);
+
+        // save into database
+        profileRepository.save(currentUser);
+
+        try{
+            // TODO: send the reset otp email
+            emailService.sendResetOtpEmail(currentUser.getEmail(), otp);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            System.err.println("Email sending failed: " + ex.getMessage());
+            throw new RuntimeException("Unable to send email: " + ex.getMessage(), ex);
+        }
+
+    }
+
+
+
+    // @Override
+    public void resetPassword(String email, String otp, String newPassword){
+        ProfileEntity currentUser = profileRepository.findByEmail(email)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found: "+email));
+
+        if(currentUser.getResetOtp() == null || !currentUser.getResetOtp().equals(otp)){
+            throw new RuntimeException("Invalid OTP");
+        }
+
+        if(currentUser.getResetOtpExpiredAt() < System.currentTimeMillis()){
+            throw new RuntimeException("OTP expired");
+        }
+
+        currentUser.setPassword(passwordEncoder.encode(newPassword));
+        currentUser.setResetOtp(null);
+        currentUser.setResetOtpExpiredAt(0L);
+
+        profileRepository.save(currentUser);
     }
 
 }

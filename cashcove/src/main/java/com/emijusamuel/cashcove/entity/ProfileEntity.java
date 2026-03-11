@@ -40,6 +40,8 @@ public class ProfileEntity {
     private LocalDateTime updatedAt;
     private Boolean isActive;
     private String activationToken;
+    private String resetOtp;
+    private Long resetOtpExpiredAt;
 
     @PrePersist
     public void prePersist(){
