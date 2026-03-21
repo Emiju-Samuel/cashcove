@@ -5,6 +5,7 @@ import { apiEndpoints, baseUrl } from '../util/apiEndpoints';
 import axios from 'axios';
 import { assets } from '../assets/assets';
 import axiosConfig from '../util/axiosConfig';
+import { toast } from 'react-toastify';
 
 const ResetPassword = () => {
 
@@ -52,7 +53,7 @@ const ResetPassword = () => {
     e.preventDefault();
     setLoading(true);
     try{
-      const response = await axiosConfig.post(apiEndpoints.SEND_RESET_OTP, {email});
+      const response = await axiosConfig.post(`${apiEndpoints.SEND_RESET_OTP}?email=${encodeURIComponent(email)}`);
       if(response.status === 200){
         toast.success("Password reset OTP sent successfully");
         setIsEmailSent(true);
