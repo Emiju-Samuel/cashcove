@@ -5,6 +5,8 @@ const CLOUDINARY_NAME = "dktaopmnb";
 export const apiEndpoints = {
     LOGIN: "/login",
     REGISTER: "/register",
+    RESET_PASSWORD: "/reset-password",
+    SEND_RESET_OTP: "/send-reset-otp",
     GET_USER_INFO: "/profile",
     GET_ALL_CATEGORIES: "/categories",
     ADD_CATEGORY: "/categories",

@@ -93,6 +93,10 @@ const Login = () => {
               type="password"
             />
 
+            <div className="d-flex justify-content-between mb-3">
+                    <Link to="/reset-password" className='text-decoration-none'>Forgot Password?</Link>
+                </div>
+
             {error && (
               <p className="text-red-800 text-sm text-center bg-red-50 p-2 rounded">
                 {error}
