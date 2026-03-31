@@ -132,7 +132,7 @@ public class ProfileController {
         }
 
         try{
-            profileService.resetPassword(request.getEmail(), request.getOtp(), request.getNewpassword());
+            profileService.resetPassword(request.getEmail(), request.getOtp(), request.getNewPassword());
             return ResponseEntity.ok().build();
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());

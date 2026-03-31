@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 public class ResetPassword {
 
-    private String newpassword;
+    private String newPassword;
 
     private String otp;
 
