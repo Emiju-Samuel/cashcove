@@ -1,8 +1,8 @@
 package com.emijusamuel.cashcove.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale.Category;
 import java.util.UUID;
 
 import org.springframework.scheduling.annotation.Scheduled;
@@ -122,7 +122,8 @@ public class SubscriptionService {
 
     // Background job
     @Transactional
-    @Scheduled(cron = "0 5 0 * * ?")   // every day at 00:05
+    // @Scheduled(cron = "0 * * * * *", zone = "UTC")
+    // @Scheduled(cron = "0 5 0 * * ?")   every day at 00:05
     public void sendDailyRenewalReminders() {
         LocalDate today = LocalDate.now();
         
@@ -136,12 +137,23 @@ public class SubscriptionService {
                 // FIX: Now use the isDueForReminder() method to respect reminderDaysBefore!
                 // This checks if today equals (nextRenewalDate - reminderDaysBefore)
                 if (subscription.isDueForReminder(today)) {
-                    String subject = "Subscription Renewal Reminder: " + subscription.getSubscriptionName();
-                    String body = "Hi " + subscription.getProfile().getFullName() + ",\n\nYour subscription for " + 
-                                  subscription.getSubscriptionName() + " is due for renewal on " + subscription.getNextRenewalDate() + ".";
-                    emailService.sendEmail(subscription.getProfile().getEmail(), subject, body);
+                    String subject = "Action Required: " + subscription.getSubscriptionName() + " Renewal Due";
+                    String body = buildSubscriptionReminderEmail(
+                        subscription.getProfile().getFullName(),
+                        subscription.getSubscriptionName(),
+                        subscription.getNextRenewalDate(),
+                        subscription.getAmount()
+                    );
+                    emailService.sendHtmlEmail(subscription.getProfile().getEmail(), subject, body);
                     log.info("Reminder sent for subscription {} ({}) to {}", 
                              subscription.getId(), subscription.getSubscriptionName(), subscription.getProfile().getEmail());
+                    
+                    // Add delay to respect email service rate limits (500ms between emails)
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                 }
             } catch (Exception e) {
                 log.error("Failed to send reminder for subscription {}", subscription.getId(), e);
@@ -222,6 +234,85 @@ public class SubscriptionService {
             case YEARLY     -> dto.getStartDate().plusMonths(12);
             default         -> dto.getStartDate(); // or throw
         };
+    }
+
+    private String buildSubscriptionReminderEmail(String fullName, String subscriptionName, LocalDate renewalDate, BigDecimal amount) {
+        String formattedAmount = String.format("%.2f", amount);
+        
+        return "<!DOCTYPE html>" +
+            "<html lang='en'>" +
+            "<head>" +
+            "<meta charset='UTF-8'>" +
+            "<meta name='viewport' content='width=device-width, initial-scale=1.0'>" +
+            "<style>" +
+            "* { margin: 0; padding: 0; box-sizing: border-box; }" +
+            "body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }" +
+            ".container { max-width: 600px; margin: 20px auto; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }" +
+            ".header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px 20px; text-align: center; color: white; }" +
+            ".header h1 { font-size: 24px; margin-bottom: 8px; font-weight: 600; }" +
+            ".header p { font-size: 14px; opacity: 0.9; }" +
+            ".content { padding: 40px 30px; }" +
+            ".alert-box { background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%); border-left: 4px solid #ff6b35; padding: 20px; border-radius: 8px; margin-bottom: 30px; }" +
+            ".alert-box h2 { color: #ff6b35; font-size: 18px; margin-bottom: 8px; }" +
+            ".alert-box p { color: #cc5200; font-size: 14px; font-weight: 500; }" +
+            ".greeting { font-size: 16px; color: #2d3748; margin-bottom: 25px; line-height: 1.6; }" +
+            ".details-card { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 25px; margin: 25px 0; }" +
+            ".detail-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #e2e8f0; }" +
+            ".detail-row:last-child { border-bottom: none; }" +
+            ".detail-label { font-size: 13px; color: #718096; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }" +
+            ".detail-value { font-size: 16px; color: #2d3748; font-weight: 600; }" +
+            ".renewal-date { color: #ff6b35; font-size: 20px; }" +
+            ".cta-button { background: linear-gradient(135deg, #ff6b35 0%, #ff4757 100%); color: white; text-align: center; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 30px 0; display: inline-block; width: 100%; box-sizing: border-box; cursor: pointer; font-size: 16px; transition: transform 0.2s; }" +
+            ".cta-button:hover { transform: translateY(-2px); }" +
+            ".footer-text { font-size: 13px; color: #718096; line-height: 1.6; margin: 30px 0 0 0; padding-top: 20px; border-top: 1px solid #e2e8f0; }" +
+            ".urgency-badge { display: inline-block; background: #ff6b35; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-left: 10px; }" +
+            "</style>" +
+            "</head>" +
+            "<body>" +
+            "<div class='container'>" +
+            "<div class='header'>" +
+            "<h1>🔔 Subscription Renewal Alert</h1>" +
+            "<p>Action required to maintain your subscription</p>" +
+            "</div>" +
+            "<div class='content'>" +
+            "<p class='greeting'>Hi <strong>" + fullName + "</strong>,</p>" +
+            "<div class='alert-box'>" +
+            "<h2>⚠️ Time to Renew Your Subscription</h2>" +
+            "<p>Your subscription renewal is coming up soon. Don't let your service lapse!</p>" +
+            "</div>" +
+            "<div class='details-card'>" +
+            "<div class='detail-row'>" +
+            "<span class='detail-label'>💳 Service</span>" +
+            "<span class='detail-value'>" + subscriptionName + "</span>" +
+            "</div>" +
+            "<div class='detail-row'>" +
+            "<span class='detail-label'>📅 Renewal Date <span class='urgency-badge'>URGENT</span></span>" +
+            "<span class='detail-value renewal-date'>" + renewalDate.toString() + "</span>" +
+            "</div>" +
+            "<div class='detail-row'>" +
+            "<span class='detail-label'>💰 Amount Due</span>" +
+            "<span class='detail-value'>$" + formattedAmount + "</span>" +
+            "</div>" +
+            "</div>" +
+            "<p style='color: #2d3748; font-size: 14px; line-height: 1.8; margin: 20px 0;'>" +
+            "Your <strong>" + subscriptionName + "</strong> subscription is set to renew on " +
+            "<strong style='color: #ff6b35; font-size: 16px;'>" + renewalDate.toString() + "</strong>." +
+            "<br><br>" +
+            "Please ensure your payment method is up to date to avoid any service interruptions. " +
+            "Renew now to keep enjoying uninterrupted service!" +
+            "</p>" +
+            "<a href='#' class='cta-button'>Renew Now</a>" +
+            "<p class='footer-text'>" +
+            "<strong>Why are you receiving this?</strong><br>" +
+            "We send you reminders before your subscription renews so you're always in control. " +
+            "If you have questions about your subscription, please contact our support team." +
+            "<br><br>" +
+            "<em>CashCove Financial Management</em>" +
+            "</p>" +
+            "</div>" +
+            "</div>" +
+            "</body>" +
+            "</html>";
     }
 
 }
