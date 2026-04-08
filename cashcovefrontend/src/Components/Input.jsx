@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FiEyeOff } from 'react-icons/fi';
+import { FaEye } from "react-icons/fa";
 
 
 const Input = ({label, value, onChange, placeholder, type, isSelect, options}) => {
@@ -42,7 +43,7 @@ const Input = ({label, value, onChange, placeholder, type, isSelect, options}) =
             {type === 'password' && (
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
                     {showPassword ? (
-                        <FiEyeOff
+                        <FaEye
                         size={20}
                         className="text-purple-800"
                         onClick={toggleShowPassword}
