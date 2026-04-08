@@ -152,7 +152,8 @@ public class SubscriptionService {
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
+                        // Log the interruption but don't re-interrupt (this stops the loop)
+                        log.debug("Thread interrupted while sleeping between emails", e);
                     }
                 }
             } catch (Exception e) {
