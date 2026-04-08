@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FiEyeOff } from 'react-icons/fi';
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 
 
 const Input = ({label, value, onChange, placeholder, type, isSelect, options}) => {
@@ -49,7 +49,7 @@ const Input = ({label, value, onChange, placeholder, type, isSelect, options}) =
                         onClick={toggleShowPassword}
                         />
                     ):(
-                        <FiEyeOff
+                        <FaRegEyeSlash
                         size={20}
                         className="text-slate-400"
                         onClick={toggleShowPassword}
