@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FiEyeOff } from 'react-icons/fi';
 
+
 const Input = ({label, value, onChange, placeholder, type, isSelect, options}) => {
 
     const [showPassword, setShowPassword] = useState(false);
@@ -47,7 +48,7 @@ const Input = ({label, value, onChange, placeholder, type, isSelect, options}) =
                         onClick={toggleShowPassword}
                         />
                     ):(
-                        <FiEyeOff 
+                        <FiEyeOff
                         size={20}
                         className="text-slate-400"
                         onClick={toggleShowPassword}
